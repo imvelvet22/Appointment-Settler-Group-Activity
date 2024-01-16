@@ -9,6 +9,10 @@ const AppointmentTab = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (purpose === '') {
+      // Purpose field is empty, prevent form submission
+      return;
+    }
     const newAppointment = { name, date, time, purpose };
     setAppointments([...appointments, newAppointment]);
     // Reset form fields
@@ -39,10 +43,16 @@ const AppointmentTab = () => {
         <br />
         <label>
           Purpose:
-          <input type="text" value={purpose} onChange={(e) => setPurpose(e.target.value)} />
+          <select value={purpose} onChange={(e) => setPurpose(e.target.value)}>
+            <option value="">Select Purpose</option>
+            <option value="Meeting">Meeting</option>
+            <option value="Consultation">Consultation</option>
+            <option value="Check-up">Check-up</option>
+            <option value="Follow-up">Follow-up</option>
+          </select>
         </label>
         <br />
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={purpose === ''}>Submit</button>
       </form>
 
       <h3>Submitted Appointments:</h3>
